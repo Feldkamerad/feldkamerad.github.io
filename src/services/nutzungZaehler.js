@@ -1,61 +1,85 @@
 // ============================================================
 //  nutzungZaehler.js
-//  Zählt die Gemini-Anfragen LOKAL (localStorage) – pro Minute
-//  und pro Tag – damit man sieht, wie viel vom Gratis-Kontingent
-//  schon verbraucht ist. (Rein clientseitig, kein Server.)
+//  Zählt die Gemini-Anfragen GLOBAL (Firebase Realtime Database)
+//  pro Minute und pro Tag für alle Nutzer übergreifend.
 // ============================================================
 
-// === Limits des gewählten Modells (Free Tier) ===
-// Diese Zahlen gelten für gemini-2.5-flash auf der Gratis-Stufe.
-// Die genauen Werte zeigt dein Dashboard: https://aistudio.google.com/rate-limit
-// -> Falls dort andere Zahlen stehen, einfach hier anpassen.
-export const LIMIT_PRO_MINUTE = 10; // RPM (Anfragen pro Minute)
-export const LIMIT_PRO_TAG = 250; // RPD (Anfragen pro Tag)
+import { getDatabase, ref, onValue, runTransaction } from 'firebase/database';
+import { app } from '../firebase';
 
-const SPEICHER_KEY = 'gartenai_gemini_nutzung';
-const TAG_MS = 24 * 60 * 60 * 1000;
+export const LIMIT_PRO_MINUTE = 15;
+export const LIMIT_PRO_TAG = 1500;
+
+const db = getDatabase(app);
 
 let listeners = [];
+let localProMinute = 0;
+let localProTag = 0;
 
-function ladeStempel() {
-  try {
-    return JSON.parse(localStorage.getItem(SPEICHER_KEY) || '[]');
-  } catch {
-    return [];
-  }
-}
-
-function speichereStempel(stempel) {
-  localStorage.setItem(SPEICHER_KEY, JSON.stringify(stempel));
-}
-
-function mitternachtHeute() {
+// Hilfsfunktionen für die Schlüssel in Firebase
+function getDayKey() {
   const d = new Date();
-  d.setHours(0, 0, 0, 0);
-  return d.getTime();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+function getMinuteKey() {
+  const d = new Date();
+  return `${getDayKey()}_${String(d.getHours()).padStart(2, '0')}-${String(d.getMinutes()).padStart(2, '0')}`;
 }
 
-/** Aktuelle Nutzung berechnen. */
+let currentDayKey = getDayKey();
+let currentMinuteKey = getMinuteKey();
+
+let unsubDay = null;
+let unsubMinute = null;
+
+function subscribeToFirebase() {
+  if (unsubDay) unsubDay();
+  if (unsubMinute) unsubMinute();
+
+  const dayRef = ref(db, `usage/days/${currentDayKey}`);
+  unsubDay = onValue(dayRef, (snapshot) => {
+    localProTag = snapshot.val() || 0;
+    benachrichtige();
+  });
+
+  const minuteRef = ref(db, `usage/minutes/${currentMinuteKey}`);
+  unsubMinute = onValue(minuteRef, (snapshot) => {
+    localProMinute = snapshot.val() || 0;
+    benachrichtige();
+  });
+}
+
+// Sofort initial abonnieren
+subscribeToFirebase();
+
+// Timer, um den Listener bei Minutenwechsel zu erneuern
+setInterval(() => {
+  const newMinuteKey = getMinuteKey();
+  if (newMinuteKey !== currentMinuteKey) {
+    currentDayKey = getDayKey();
+    currentMinuteKey = newMinuteKey;
+    // Neu auf die aktuelle Minute und den Tag lauschen
+    localProMinute = 0; // Optimistische Nullsetzung vor dem ersten Fetch
+    subscribeToFirebase();
+  }
+}, 5000);
+
 export function holeNutzung() {
-  const jetzt = Date.now();
-  const stempel = ladeStempel().filter((t) => jetzt - t < TAG_MS);
-  const proMinute = stempel.filter((t) => jetzt - t < 60 * 1000).length;
-  const proTag = stempel.filter((t) => t >= mitternachtHeute()).length;
   return {
-    proMinute,
-    proTag,
+    proMinute: localProMinute,
+    proTag: localProTag,
     limitProMinute: LIMIT_PRO_MINUTE,
     limitProTag: LIMIT_PRO_TAG,
   };
 }
 
-/** Eine neue Anfrage protokollieren (wird vom geminiService aufgerufen). */
 export function protokolliere() {
-  const jetzt = Date.now();
-  const stempel = ladeStempel().filter((t) => jetzt - t < TAG_MS);
-  stempel.push(jetzt);
-  speichereStempel(stempel);
-  benachrichtige();
+  // Transaktionen, um sicherzustellen, dass gleichzeitige Anfragen korrekt zählen
+  const dayRef = ref(db, `usage/days/${getDayKey()}`);
+  runTransaction(dayRef, (current) => (current || 0) + 1);
+
+  const minuteRef = ref(db, `usage/minutes/${getMinuteKey()}`);
+  runTransaction(minuteRef, (current) => (current || 0) + 1);
 }
 
 function benachrichtige() {
@@ -63,7 +87,6 @@ function benachrichtige() {
   listeners.forEach((l) => l(n));
 }
 
-/** Für die Live-Anzeige: bei Änderungen benachrichtigt werden. */
 export function abonniere(fn) {
   listeners.push(fn);
   return () => {
