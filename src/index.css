@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Grundeinstellungen – mobil-first, ruhig & gut lesbar im Freien */
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #fafaf9; /* stone-50 – warmes, ruhiges Neutral */
+  color: #1c1917; /* stone-900 */
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  /* Sicherer Bereich für Geräte mit Notch */
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Dark Mode */
+.dark body {
+  background-color: #0c0a09; /* stone-950 */
+  color: #e7e5e4; /* stone-200 */
+}
+
+/* Verhindert ungewolltes Zoomen beim Fokus auf Eingabefelder (iOS) */
+input,
+select,
+textarea {
+  font-size: 16px;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Lade-Spinner */
+@keyframes garten-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.garten-spinner {
+  animation: garten-spin 0.7s linear infinite;
+}
+
+/* Sanftes Einblenden (z. B. Ergebnisse, Banner) */
+@keyframes garten-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.garten-anim {
+  animation: garten-fade-in 0.25s ease-out both;
+}
