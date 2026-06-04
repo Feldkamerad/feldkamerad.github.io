@@ -7,7 +7,7 @@
 
 import { useEffect, useState } from 'react';
 
-const KEY = 'gartenai_theme';
+const KEY = 'feldkamerad_theme';
 
 export function useTheme() {
   const [dunkel, setDunkel] = useState(

@@ -1,9 +1,9 @@
 {
-  "name": "gartenai",
+  "name": "feldkamerad",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "GartenAI – KI-gestützte Pflanzenhilfe für Landwirtschaftsschüler",
+  "description": "Feldkamerad – KI-gestützte Pflanzenhilfe für Landwirtschaftsschüler",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

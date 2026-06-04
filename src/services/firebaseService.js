@@ -53,18 +53,18 @@ const COLLECTION = 'felder';
 
 /** Eindeutige, zufällige Geräte-ID (einmalig erzeugt, dann im localStorage gemerkt). */
 function geraetId() {
-  let id = localStorage.getItem('gartenai_geraet_id');
+  let id = localStorage.getItem('feldkamerad_geraet_id');
   if (!id) {
     id =
       (crypto.randomUUID && crypto.randomUUID()) ||
       'g_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
-    localStorage.setItem('gartenai_geraet_id', id);
+    localStorage.setItem('feldkamerad_geraet_id', id);
   }
   return id;
 }
 
 // ---------- localStorage-Fallback ----------
-const LS_KEY = 'gartenai_felder';
+const LS_KEY = 'feldkamerad_felder';
 function lsLaden() {
   try {
     return JSON.parse(localStorage.getItem(LS_KEY) || '[]');

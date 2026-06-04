@@ -8,7 +8,7 @@ import './index.css';
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   window.__gartenInstallPrompt = e;
-  window.dispatchEvent(new Event('gartenai:install-available'));
+  window.dispatchEvent(new Event('feldkamerad:install-available'));
 });
 
 ReactDOM.createRoot(document.getElementById('root')).render(

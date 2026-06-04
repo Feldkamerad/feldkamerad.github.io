@@ -15,8 +15,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon-180x180.png'],
       manifest: {
-        name: 'GartenAI – Pflanzenhilfe',
-        short_name: 'GartenAI',
+        name: 'Feldkamerad – Pflanzenhilfe',
+        short_name: 'Feldkamerad',
         description:
           'KI-Pflanzenhilfe: Pflanzen- & Krankheitserkennung, Bodenanalyse, Wetter & Fruchtfolge.',
         lang: 'de',

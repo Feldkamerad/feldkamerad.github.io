@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#16a34a" />
-    <meta name="description" content="GartenAI – KI-Pflanzenhilfe für Landwirtschaftsschüler: Pflanzen- und Krankheitserkennung, Bodenanalyse, Wetter & Fruchtfolge." />
+    <meta name="description" content="Feldkamerad – KI-Pflanzenhilfe für Landwirtschaftsschüler: Pflanzen- und Krankheitserkennung, Bodenanalyse, Wetter & Fruchtfolge." />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
@@ -13,20 +13,20 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content="GartenAI" />
+    <meta name="apple-mobile-web-app-title" content="Feldkamerad" />
 
     <!-- Dark Mode sofort setzen (verhindert helles Aufblitzen beim Laden) -->
     <script>
       (function () {
         try {
-          var t = localStorage.getItem('gartenai_theme');
+          var t = localStorage.getItem('feldkamerad_theme');
           var dunkel = t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches);
           if (dunkel) document.documentElement.classList.add('dark');
         } catch (e) {}
       })();
     </script>
 
-    <title>GartenAI – Pflanzenhilfe</title>
+    <title>Feldkamerad – Pflanzenhilfe</title>
   </head>
   <body>
     <div id="root"></div>

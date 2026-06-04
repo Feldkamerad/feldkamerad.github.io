@@ -1,6 +1,6 @@
 // ============================================================
 //  InstallBanner.jsx
-//  Bietet direkt nach dem Öffnen an, GartenAI zum Startbildschirm
+//  Bietet direkt nach dem Öffnen an, Feldkamerad zum Startbildschirm
 //  hinzuzufügen.
 //   - Android/Chrome/Edge: echter Installations-Prompt (beforeinstallprompt)
 //   - iPhone/iPad (Safari): Anleitung, da iOS keinen Auto-Prompt erlaubt
@@ -10,7 +10,7 @@
 
 import { useEffect, useState } from 'react';
 
-const DISMISS_KEY = 'gartenai_install_weggetippt';
+const DISMISS_KEY = 'feldkamerad_install_weggetippt';
 
 function istStandalone() {
   return (
@@ -45,7 +45,7 @@ export default function InstallBanner() {
       setSichtbar(true);
     }
     pruefe();
-    window.addEventListener('gartenai:install-available', pruefe);
+    window.addEventListener('feldkamerad:install-available', pruefe);
     window.addEventListener('beforeinstallprompt', aufEvent);
 
     if (istIOS()) {
@@ -54,7 +54,7 @@ export default function InstallBanner() {
     }
 
     return () => {
-      window.removeEventListener('gartenai:install-available', pruefe);
+      window.removeEventListener('feldkamerad:install-available', pruefe);
       window.removeEventListener('beforeinstallprompt', aufEvent);
     };
   }, []);
@@ -83,7 +83,7 @@ export default function InstallBanner() {
     <div className="garten-anim mb-4 flex items-start gap-3 rounded-3xl bg-white p-4 shadow-sm ring-1 ring-stone-200 dark:bg-stone-900 dark:ring-stone-800">
       <img src="/favicon.svg" alt="" className="h-11 w-11 shrink-0 rounded-2xl" />
       <div className="min-w-0 flex-1">
-        <p className="font-semibold text-stone-900 dark:text-stone-100">GartenAI installieren</p>
+        <p className="font-semibold text-stone-900 dark:text-stone-100">Feldkamerad installieren</p>
         {iosHinweis ? (
           <p className="mt-0.5 text-sm leading-snug text-stone-500 dark:text-stone-400">
             Tippe unten auf <span className="font-semibold text-stone-700 dark:text-stone-200">Teilen</span> und dann auf{' '}

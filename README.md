@@ -1,4 +1,4 @@
-# 🌱 GartenAI – KI-Pflanzenhilfe für Landwirtschaftsschüler
+# 🌱 Feldkamerad – KI-Pflanzenhilfe für Landwirtschaftsschüler
 
 Eine mobile-first Web-App, die Landwirtschaftsschülern (primär **HBLAuLT Wieselburg**)
 und Kleinbauern hilft: Pflanzen- und Krankheitserkennung per Foto, Bodenanalyse,
@@ -84,19 +84,19 @@ Browser** (localStorage). Für geräteübergreifende Cloud-Speicherung so vorgeh
 
 ### a) Projekt anlegen
 1. Auf **https://console.firebase.google.com** gehen → **„Projekt hinzufügen“**.
-2. Namen vergeben (z. B. `gartenai`). Google Analytics kannst du **deaktivieren**.
+2. Namen vergeben (z. B. `feldkamerad`). Google Analytics kannst du **deaktivieren**.
 3. Auf **„Projekt erstellen“** klicken und warten.
 
 ### b) Web-App registrieren
 4. Im Projekt auf das **Web-Symbol `</>`** klicken („App hinzufügen“).
-5. App-Namen vergeben (z. B. `GartenAI Web`). **Firebase Hosting NICHT** ankreuzen.
+5. App-Namen vergeben (z. B. `Feldkamerad Web`). **Firebase Hosting NICHT** ankreuzen.
 6. Auf **„App registrieren“** klicken → es erscheint ein `firebaseConfig` Objekt:
    ```js
    const firebaseConfig = {
      apiKey: "AIza...",
-     authDomain: "gartenai-xxxx.firebaseapp.com",
-     projectId: "gartenai-xxxx",
-     storageBucket: "gartenai-xxxx.appspot.com",
+     authDomain: "feldkamerad-xxxx.firebaseapp.com",
+     projectId: "feldkamerad-xxxx",
+     storageBucket: "feldkamerad-xxxx.appspot.com",
      messagingSenderId: "1234567890",
      appId: "1:1234567890:web:abc123",
    };
@@ -207,8 +207,8 @@ Das führt automatisch `npm run build` aus und schiebt den Inhalt von `dist/` in
 
 > 🔧 **Hinweis zum `base`-Pfad:** Da dieses Repo `AckerAI.github.io` heißt (eine
 > *User-Page*), läuft die Seite im Wurzelverzeichnis – in `vite.config.js` steht
-> deshalb `base: '/'`. Würdest du die App in ein normales Repo namens `gartenai`
-> legen, müsste dort `base: '/gartenai/'` stehen.
+> deshalb `base: '/'`. Würdest du die App in ein normales Repo namens `feldkamerad`
+> legen, müsste dort `base: '/feldkamerad/'` stehen.
 
 > ⚠️ **Sicherheit beim Deployment:** Im veröffentlichten JavaScript sind die
 > `VITE_`-Werte (Gemini-/Firebase-Key) enthalten. Setze daher unbedingt ein
@@ -218,9 +218,9 @@ Das führt automatisch `npm run build` aus und schiebt den Inhalt von `dist/` in
 
 ## 📲 Als App installieren (PWA)
 
-GartenAI ist eine **Progressive Web App** – sie lässt sich wie eine echte App auf den Startbildschirm legen.
+Feldkamerad ist eine **Progressive Web App** – sie lässt sich wie eine echte App auf den Startbildschirm legen.
 
-- **Android (Chrome/Edge):** Direkt nach dem Öffnen erscheint das Banner „GartenAI installieren" → auf **Installieren** tippen. (Alternativ: Menü ⋮ → „App installieren".)
+- **Android (Chrome/Edge):** Direkt nach dem Öffnen erscheint das Banner „Feldkamerad installieren" → auf **Installieren** tippen. (Alternativ: Menü ⋮ → „App installieren".)
 - **iPhone/iPad (Safari):** iOS erlaubt keinen Auto-Prompt. Daher erscheint ein Hinweis: unten auf **Teilen** ⬆️ tippen → **„Zum Home-Bildschirm"**.
 
 ### Bekomme ich Updates automatisch – oder neu installieren?

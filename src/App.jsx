@@ -37,7 +37,7 @@ export default function App() {
             <div className="flex items-center gap-2.5">
               <img src="/favicon.svg" alt="" className="h-9 w-9 rounded-xl" />
               <div className="leading-tight">
-                <h1 className="text-base font-bold tracking-tight text-stone-900 dark:text-stone-50">GartenAI</h1>
+                <h1 className="text-base font-bold tracking-tight text-stone-900 dark:text-stone-50">Feldkamerad</h1>
                 <p className="text-[11px] text-stone-500 dark:text-stone-400">KI-Pflanzenhilfe</p>
               </div>
             </div>
