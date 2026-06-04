@@ -10,7 +10,7 @@
 //  "geraetId" (im localStorage) zugeordnet.
 // ============================================================
 
-import { initializeApp } from 'firebase/app';
+import { app } from '../firebase';
 import {
   getFirestore,
   collection,
@@ -25,28 +25,13 @@ import {
   serverTimestamp,
 } from 'firebase/firestore';
 
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-};
-
-// Firebase ist nur aktiv, wenn die wichtigsten Werte gesetzt sind.
-export const firebaseAktiv = Boolean(
-  firebaseConfig.apiKey && firebaseConfig.projectId && !firebaseConfig.apiKey.startsWith('hier_')
-);
+export const firebaseAktiv = true; // Wir haben die feste Config in firebase.js
 
 let db = null;
-if (firebaseAktiv) {
-  try {
-    const app = initializeApp(firebaseConfig);
-    db = getFirestore(app);
-  } catch (e) {
-    console.error('Firebase konnte nicht initialisiert werden:', e);
-  }
+try {
+  db = getFirestore(app);
+} catch (e) {
+  console.error('Firestore konnte nicht initialisiert werden:', e);
 }
 
 const COLLECTION = 'felder';
