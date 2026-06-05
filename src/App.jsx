@@ -11,6 +11,7 @@ import Bodenanalyse from './components/Bodenanalyse';
 import WetterEmpfehlung from './components/WetterEmpfehlung';
 import Fruchtfolge from './components/Fruchtfolge';
 import MeinBetrieb from './components/MeinBetrieb';
+import KatalogScanner from './components/KatalogScanner';
 import NutzungsAnzeige from './components/NutzungsAnzeige';
 import InstallBanner from './components/InstallBanner';
 
@@ -20,6 +21,7 @@ const TABS = [
   { id: 'boden', label: 'Boden', icon: '🧪', Komponente: Bodenanalyse },
   { id: 'wetter', label: 'Wetter', icon: '🌦️', Komponente: WetterEmpfehlung },
   { id: 'folge', label: 'Folge', icon: '🔄', Komponente: Fruchtfolge },
+  { id: 'katalog', label: 'Katalog', icon: '📚', Komponente: KatalogScanner },
   { id: 'betrieb', label: 'Betrieb', icon: '🚜', Komponente: MeinBetrieb },
 ];
 
@@ -65,7 +67,7 @@ export default function App() {
           className="fixed inset-x-0 bottom-0 z-20 border-t border-stone-200 bg-white/95 backdrop-blur dark:border-stone-800 dark:bg-stone-900/95"
           style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
         >
-          <div className="mx-auto grid max-w-md grid-cols-6 px-1 py-1">
+          <div className="mx-auto grid max-w-md grid-cols-7 px-1 py-1">
             {TABS.map((t) => {
               const istAktiv = t.id === aktiv;
               return (
